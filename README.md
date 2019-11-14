@@ -22,7 +22,7 @@ To run the `CreditRatingClient` application:
 1. Move to the `CreditRatingClient` folder 
 2. Type `dotnet run` in a terminal window
 
-> NOTE:** If you are using MacOS, you need to disable TLS support. Follow the instructions in `Program.cs`
+> **NOTE:** If you are using MacOS, you need to disable TLS support. Follow the instructions in `Program.cs`
 >
 > Read the article for more details
 
