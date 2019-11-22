@@ -24,7 +24,7 @@ namespace CreditRatingService
         {
             return Task.FromResult(new CreditReply
             {
-                IsAccepted = true
+                IsAccepted = IsEligibleForCredit(request.CustomerId, request.Credit)
             });
         }
 
