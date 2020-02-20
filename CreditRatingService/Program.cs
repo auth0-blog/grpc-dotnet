@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using System.Runtime.InteropServices;
 
 namespace CreditRatingService
 {
@@ -11,27 +12,19 @@ namespace CreditRatingService
             CreateHostBuilder(args).Build().Run();
         }
 
-        
-        // Comment the following method if you are running on MacOS
        public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) {
+                     webBuilder.ConfigureKestrel(options =>
+                     {
+                         // Setup a HTTP/2 endpoint without TLS.
+                         options.ListenLocalhost(5000, o => o.Protocols = 
+                             HttpProtocols.Http2);
+                     });
+                    }
                     webBuilder.UseStartup<Startup>();
                 });
-
-        // Uncomment the following method if you are running on MacOS
-        // public static IHostBuilder CreateHostBuilder(string[] args) =>
-        //     Host.CreateDefaultBuilder(args)
-        //         .ConfigureWebHostDefaults(webBuilder =>
-        //         {
-        //             webBuilder.ConfigureKestrel(options =>
-        //             {
-        //                 // Setup a HTTP/2 endpoint without TLS.
-        //                 options.ListenLocalhost(5000, o => o.Protocols = 
-        //                     HttpProtocols.Http2);
-        //             });
-        //             webBuilder.UseStartup<Startup>();
-        //         });
     }
 }
